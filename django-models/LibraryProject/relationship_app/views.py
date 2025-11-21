@@ -65,17 +65,19 @@ def register_view(request):
 
 
 #Role-baed Access Control
- #Admin View
+ # Admin view
 @user_passes_test(lambda u: hasattr(u, 'userprofile') and u.userprofile.role == 'Admin')
 def admin_view(request):
     return render(request, 'relationship_app/admin_view.html')
 
-#Librarian View
+
+# Librarian view
 @user_passes_test(lambda u: hasattr(u, 'userprofile') and u.userprofile.role == 'Librarian')
 def librarian_view(request):
     return render(request, 'relationship_app/librarian_view.html')
 
-#Member view
+
+# Member view
 @user_passes_test(lambda u: hasattr(u, 'userprofile') and u.userprofile.role == 'Member')
 def member_view(request):
     return render(request, 'relationship_app/member_view.html')

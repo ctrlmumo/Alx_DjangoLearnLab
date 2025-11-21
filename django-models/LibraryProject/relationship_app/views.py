@@ -2,6 +2,10 @@ from django.shortcuts import render, get_object_or_404
 from .models import Book, Library
 from django.views.generic.detail import DetailView
 from .models import Library
+from django.contrib.auth.decorators import user_passes_test
+from django.shortcuts import render
+from .models import UserProfile
+
 
 # Function-based view to list all books
 def list_books(request):
@@ -58,3 +62,20 @@ def register_view(request):
     else:
         form = UserCreationForm()
     return render(request, "relationship_app/register.html", {"form": form})
+
+
+#Role-baed Access Control
+ #Admin View
+@user_passes_test(lambda u: hasattr(u, 'userprofile') and u.userprofile.role == 'Admin')
+def admin_view(request):
+    return render(request, 'relationship_app/admin_view.html')
+
+#Librarian View
+@user_passes_test(lambda u: hasattr(u, 'userprofile') and u.userprofile.role == 'Librarian')
+def librarian_view(request):
+    return render(request, 'relationship_app/librarian_view.html')
+
+#Member view
+@user_passes_test(lambda u: hasattr(u, 'userprofile') and u.userprofile.role == 'Member')
+def member_view(request):
+    return render(request, 'relationship_app/member_view.html')

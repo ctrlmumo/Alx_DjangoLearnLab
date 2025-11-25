@@ -34,6 +34,11 @@ class BookAPITestCase(APITestCase):
         response = self.client.get(self.list_url)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
+    def test_login_authentication(self):
+        #Test login with valid credentials.
+        login = self.client.login(username="tester", password="pass1234")
+        self.assertTrue(login)
+
     def test_authenticated_user_can_access_list(self):
         #Logged-in users should access book list.
         self.client.force_authenticate(user=self.user)

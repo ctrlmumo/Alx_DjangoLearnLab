@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from .models import Book
 from .serializers import BookSerializer
-from rest_framework import filters
+from django_filters import rest_framework as django_filters
 from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
@@ -36,7 +36,6 @@ class BookListView(generics.ListAPIView):
     ordering_fields = ["title", "publication_year"]
     ordering = ["title"]  # Default order
 
-    
 #Detail view
 class BookDetailView(generics.RetrieveAPIView):
     queryset = Book.objects.all()
